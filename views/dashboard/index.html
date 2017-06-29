@@ -55,23 +55,11 @@
         </div>
     </div>
     
-    <script type="text/template" id="profile-tpl">
-        <div class="avatar img-circle">
-            <img src="{{tc_avatar}}">
-        </div>
-        <h4>{{tc_name}}</h4>
-    </script>
 
+
+    
     <?php include "/views/public/js.html" ?>
-    <script>
-        $(function(){
-            //从cookie中获取登录成功后存储的用户信息
-            var userInfo = JSON.parse($.cookie("userinfo"))
-            var html = template("profile-tpl", userInfo);
 
-            //将模板渲染到页面中刚才挖坑的地方
-            $("#userinfo").html(html);
-        })
-    </script>
+    
 </body>
 </html>
