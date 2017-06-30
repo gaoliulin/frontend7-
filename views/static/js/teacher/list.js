@@ -33,4 +33,44 @@ define(["jquery", "template", "bootstrap"], function($, template){
 			}
 		})
 	})
+
+
+	//给注销和启用按钮注册点击事件
+	$("#teacherlist").on("click", ".btn-onoff", function(){
+		//获取当前用户当前的状态
+		var status = $(this).data("status");
+
+		var id = $(this).parent().data("id");
+
+		var $that = $(this);
+
+		//向后台发送请求
+		$.ajax({
+			url:'/api/teacher/handle',
+			type: "post",
+			data: {
+				tc_id: id,
+				tc_status: status
+			},
+			success: function(data){
+				if(data.code == 200){
+
+					//每次请求下来之后，将服务器返回的用户的状态，更新到我们注销启用按钮上
+					$that.data("status", data.result.tc_status);
+					
+					//如果后台正常返回数据，那么证明当前用户的状态已经被修改
+					//那么页面上的操作按钮，也应该进行对应的变化
+					if(data.result.tc_status == 1){
+						$that.removeClass("btn-warning");
+						$that.addClass("btn-success");
+						$that.text("启 用");
+					}else{
+						$that.removeClass("btn-success");
+						$that.addClass("btn-warning");
+						$that.text("注 销");
+					}
+				}
+			}
+		})
+	})
 });
