@@ -31,5 +31,37 @@ define(["jquery", "template", "cookie"], function($, template){
 		});
 
 
+		//如果给一个元素注册多个点击事件，那么这些点击事件在被触发的时候
+		//会按照注册的顺序进行触发！
+
+
+		//给导航栏所有的li加上点击事件，在点击的时候，让当前背景色变暗
+		$(".navs>ul>li").click(function(){
+			$(this).children("a").addClass("active");
+			$(this).siblings().children("a").removeClass("active");
+		});
+
+
+		//导航栏二级菜单显示功能
+		$(".navs>ul>li>ul").parent().click(function(){
+			//显示出来二级菜单
+			var $ul = $(this).children("ul");
+			$ul.slideToggle();
+
+			//找二级菜单下的a标签如果有选中的就把当前li的active给取消掉
+			if($ul.find("a.active").length > 0){
+				$(this).children("a").removeClass("active");
+			}
+		});
+
+		
+
+		//让当前页面对应的导航栏菜单变暗
+		$(".navs a").each(function(i, v){
+			if($(v).attr("href") == location.pathname){
+				$(v).addClass("active");
+				$(v).parent().parent().slideDown();
+			}
+		});
     })
 })
