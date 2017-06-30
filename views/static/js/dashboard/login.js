@@ -1,5 +1,6 @@
 define(["jquery", "form", "cookie"], function($){
     $("#login-form").submit(function(){
+
         $(this).ajaxSubmit({
             url: "/api/login",
             type: "post",
