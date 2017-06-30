@@ -1,4 +1,4 @@
-define(["jquery", "template", "bootstrap"], function($, template){
+define(["jquery", "template","nprogress", "bootstrap"], function($, template, NProgress){
 	$.ajax({
 		url: "/api/teacher",
 		type: "get",
@@ -9,7 +9,7 @@ define(["jquery", "template", "bootstrap"], function($, template){
 
 				$("#teacherlist").html(html);
 			}
-		}
+		},
 	});
 
 
