@@ -30,7 +30,6 @@ define(["jquery", "template", "cookie"], function($, template){
 			})
 		});
 
-
 		//如果给一个元素注册多个点击事件，那么这些点击事件在被触发的时候
 		//会按照注册的顺序进行触发！
 
