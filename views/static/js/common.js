@@ -9,5 +9,20 @@ define(["jquery", "template", "cookie"], function($, template){
 	        //将模板渲染到页面中刚才挖坑的地方
 	        $("#userinfo").html(html);
 		}  
+
+
+
+		//退出登录的功能
+		$("#logout").click(function(){
+			$.ajax({
+				url: "/api/logout",
+				type: "post",
+				success: function(data){
+					if(data.code == 200){
+						location.href = "/dashboard/login";
+					}
+				}
+			})
+		});
     })
 })
