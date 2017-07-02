@@ -16,7 +16,7 @@ define(function(){
 			return obj;
 		},
 		getQuery: function (key){
-			return getQueryObj()[key];
+			return this.getQueryObj()[key];
 		}	
 	};
 })
