@@ -1,4 +1,4 @@
-define(["jquery", "template", "util", "form"], function($, template, util){
+define(["jquery", "template", "util", "form", "datepicker", "datepicker-zh", "validate"], function($, template, util){
 	//1. 区分究竟是添加操作还是编辑操作！
 
 	//由于进行讲师编辑的时候，需要从列表中传进来当前要编辑的讲师的id
@@ -32,6 +32,13 @@ define(["jquery", "template", "util", "form"], function($, template, util){
 
 				var html = template("teacher-tpl", data.result);
 				$(".teacher").html(html);
+				$("input[name=tc_join_date]").datepicker({
+					format: "yyyy-mm-dd",
+					language: "zh-CN"
+				});
+				$("#teacherform").validate({
+
+				});
 			}
 		})
 
@@ -44,31 +51,56 @@ define(["jquery", "template", "util", "form"], function($, template, util){
 			type: "add"
 		});
 		$(".teacher").html(html);
-	}
+		$("input[name=tc_join_date]").datepicker({
+					format: "yyyy-mm-dd",
+					language: "zh-CN"
+		});
+		$("#teacherform").validate({
+			description: {
+				"tcname": {
+					required: "请输入用户名",
+				},
+				"tcpass": {
+					required: "请输入密码",
+				},
+				"tcjoindate": {
+					required: "请输入入职时间",
+				},
+			},
+			onBlur: true,
+			onKeyup: true,
+			sendForm: false,
+			eachInvalidField: function(){
+				this.parent().parent().addClass("has-error").removeClass("has-success");
+				this.parent().next().removeClass("hide");
+			},
+			eachValidField: function(){
+				this.parent().parent().addClass("has-success").removeClass("has-error");
+			},
+			valid: function(){
+				console.log("valid 被触发了，验证通过了")
 
-	//给保存按钮注册点击事件
-	$(".teacher").on("click", "#btnSave", function(){
-		var type = $(this).data("type");
-		var url = "";
+				var type = $("#btnSave").data("type");
+				var url = "";
 
-		//通过获取按钮当前的类型，是编辑或者添加来区分最终提交数据的接口地址
-		if(type == "edit"){
-			url = "/api/teacher/update";
-		}else{
-			url = "/api/teacher/add";
-		}
-
-		//使用jquery.form插件将表单进行异步提交
-		$("#teacherform").ajaxSubmit({
-			url: url,
-			type: "post",
-			success: function(data){
-				if(data.code == 200){
-					location.href = "/teacher/list"
+				//通过获取按钮当前的类型，是编辑或者添加来区分最终提交数据的接口地址
+				if(type == "edit"){
+					url = "/api/teacher/update";
+				}else{
+					url = "/api/teacher/add";
 				}
+
+				//使用jquery.form插件将表单进行异步提交
+				$("#teacherform").ajaxSubmit({
+					url: url,
+					type: "post",
+					success: function(data){
+						if(data.code == 200){
+							location.href = "/teacher/list"
+						}
+					}
+				});
 			}
 		});
-
-		return false;
-	})
+	}
 })
