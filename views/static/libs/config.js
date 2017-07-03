@@ -10,7 +10,10 @@ require.config({
           "nprogress": "assets/nprogress/nprogress",
           "datepicker": "assets/bootstrap-datepicker/js/bootstrap-datepicker.min",
           "datepicker-zh": "assets/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min",
-          "validate": "assets/jquery-validate/jquery-validate.min"
+          "validate": "assets/jquery-validate/jquery-validate.min",
+          "ckeditor": "assets/ckeditor/ckeditor",
+          "region": "assets/jquery-region/jquery.region",
+          "uploadify": "assets/uploadify/jquery.uploadify"
      },
      shim: {
      	"bootstrap": {
@@ -20,6 +23,12 @@ require.config({
                deps: ["datepicker"]
           },
           "validate": {
+               deps: ["jquery"]
+          },
+          "ckeditor": {
+               exports: "CKEDITOR"
+          },
+          "uploadify": {
                deps: ["jquery"]
           }
      }
