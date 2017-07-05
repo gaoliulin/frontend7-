@@ -4,6 +4,10 @@ define(["jquery", "util", "template", "uploadify", "jcrop"], function($, util, t
 	var y = 0;
 	var w = 0;
 	var h = 0;
+
+	//图片裁切插件的api
+	var jcrop_api;
+
 	$.ajax({
 		url: "/api/course/picture",
 		data: {cs_id: csid},
@@ -27,6 +31,12 @@ define(["jquery", "util", "template", "uploadify", "jcrop"], function($, util, t
 					data = JSON.parse(data);
 					$(".preview>img").attr("src", data.result.path);
 					$("#cropBtn").prop("disabled", false);
+					if(jcrop_api){
+						//如果用户已经点击了裁切图片按钮，再次上传图片之后，需要将之前创建出来的jcrop插件功能销毁
+						jcrop_api.destroy();
+						//重新将按钮置为 裁切图片的功能
+						$("#cropBtn").text("裁切图片");
+					}
 				},
 			});
 			//修复插件样式的小问题
@@ -44,7 +54,7 @@ define(["jquery", "util", "template", "uploadify", "jcrop"], function($, util, t
 				aspectRatio: 2,
 				setSelect: [0, 0, 400, 200]
 			}, function(){
-				var jcrop_api = this;
+				jcrop_api = this;
 	  			thumbnail = this.initComponent('Thumbnailer', { width: 240, height: 120, thumbnail: ".thumb"});
 			});
 
@@ -78,9 +88,5 @@ define(["jquery", "util", "template", "uploadify", "jcrop"], function($, util, t
 				}
 			})
 		}
-		
-
-
-
 	})
 })
